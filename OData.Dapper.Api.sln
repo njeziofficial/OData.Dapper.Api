@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OData.Dapper.Api", "OData.Dapper.Api.csproj", "{EDA1D86D-F2B3-475C-AB65-6DA73728EED9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDA1D86D-F2B3-475C-AB65-6DA73728EED9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDA1D86D-F2B3-475C-AB65-6DA73728EED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDA1D86D-F2B3-475C-AB65-6DA73728EED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDA1D86D-F2B3-475C-AB65-6DA73728EED9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {03ACD859-8716-4459-AF45-D81B2C2A4227}
+	EndGlobalSection
+EndGlobal
