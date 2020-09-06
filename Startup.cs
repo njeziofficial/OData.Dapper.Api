@@ -39,7 +39,7 @@ namespace OData.Dapper.Api
             //OData Configuration
             services.AddOData();
             services.AddControllers(mvcOptions => mvcOptions.EnableEndpointRouting = false);
-            services.AddMvcCore(action => action.EnableEndpointRouting = false);
+            //services.AddMvcCore(action => action.EnableEndpointRouting = false);
 
 
             services.AddControllersWithViews();
@@ -52,7 +52,8 @@ namespace OData.Dapper.Api
             .WithOrigins
             ("http://localhost:7071",
                 "http://localhost:1058/")
-            .AllowAnyHeader());
+            .AllowAnyHeader()
+            .AllowAnyMethod());
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -61,11 +62,16 @@ namespace OData.Dapper.Api
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            app.UseMvc(builder =>
+
+            //OData specific part
+            var builder = new ODataConventionModelBuilder();
+            builder.EntitySet<Supplier>("Suppliers");
+
+            app.UseMvc(routeBuilder =>
             {
                 // This enable dependency injection allows for use of both OData and WebAPI endpoints.
-                builder.EnableDependencyInjection();
-                builder
+                routeBuilder.EnableDependencyInjection();
+                routeBuilder
                     .Select()
                     .Expand()
                     /*This is the magic shit right below here. You see that "null" right there?
@@ -76,7 +82,7 @@ namespace OData.Dapper.Api
                     .OrderBy()
                     .Count()
                     .Expand();
-                builder.MapODataServiceRoute("api", "api", GetEdmModel());
+                routeBuilder.MapODataServiceRoute("ODataRoute", "odata", builder.GetEdmModel());
             });
             //app.UseStaticFiles();
 
@@ -91,11 +97,11 @@ namespace OData.Dapper.Api
             //        pattern: "{controller=Home}/{action=Index}/{id?}");
             //});
         }
-        private static IEdmModel GetEdmModel()
-        {
-            var odataBuilder = new ODataConventionModelBuilder();
-            odataBuilder.EntitySet<Supplier>("Suppliers");
-            return odataBuilder.GetEdmModel();
-        }
+        //private static IEdmModel GetEdmModel()
+        //{
+        //    var odataBuilder = new ODataConventionModelBuilder();
+        //    odataBuilder.EntitySet<Supplier>("Suppliers");
+        //    return odataBuilder.GetEdmModel();
+        //}
     }
 }

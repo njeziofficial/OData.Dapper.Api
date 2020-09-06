@@ -117,21 +117,22 @@ namespace OData.Dapper.Api.Repository
             {
                 using (var sqlConnection = new SqlConnection(connectionString))
                 {
-                    string sqlQuery = @"SELECT SupplierID
-      ,CompanyName
-      ,ContactName
-      ,ContactTitle
-      ,Address
-      ,City
-      ,Region
-      ,PostalCode
-      ,Country
-      ,Phone
-      ,Fax
-    ,HomePage
-  FROM Suppliers WHERE SupplierID = @SupplierID";
-                    IEnumerable<Supplier> suppliers = await sqlConnection.QueryAsync<Supplier>(sqlQuery, new { SupplierID = id });
-                    supplier = suppliers.FirstOrDefault();
+                    string sqlQuery = @"SELECT * FROM Suppliers WHERE SupplierID = @SupplierID";
+  //                  string sqlQuery = @"SELECT SupplierID
+  //    ,CompanyName
+  //    ,ContactName
+  //    ,ContactTitle
+  //    ,Address
+  //    ,City
+  //    ,Region
+  //    ,PostalCode
+  //    ,Country
+  //    ,Phone
+  //    ,Fax
+  //  ,HomePage
+  //FROM Suppliers WHERE SupplierID = @SupplierID";
+                    supplier = await sqlConnection.QuerySingleAsync<Supplier>(sqlQuery, new { SupplierID = id });
+                    //supplier = suppliers.FirstOrDefault();
                 }
             }
             catch (Exception ex)

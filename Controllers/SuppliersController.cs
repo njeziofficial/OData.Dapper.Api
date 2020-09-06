@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
 using OData.Dapper.Api.Models;
 using OData.Dapper.Api.Repository;
@@ -10,8 +11,10 @@ using OData.Dapper.Api.Repository;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace OData.Dapper.Api.Controllers
-{    
-    public class SuppliersController : ControllerBase
+{
+    //[Route("api/[controller]")]
+    //[ApiController]
+    public class SuppliersController : ODataController
     {
         private readonly ISupplierRepository repository;
 
@@ -20,17 +23,11 @@ namespace OData.Dapper.Api.Controllers
             this.repository = repository;
         }
         // GET: api/<SuppliersController>
+        [EnableQuery(PageSize = 10)]
         [HttpGet]
-        [EnableQuery(PageSize = 5)]
         public async Task<IActionResult> Get() =>
             Ok(await repository.GetSuppliers());
-
-        // GET api/<SuppliersController>/5
-        [HttpGet("{id}")]
-        [EnableQuery()]
-        public async Task<IActionResult> GetSuppierById(int id) =>
-            Ok(await repository.GetSupplierById(id));
-
+       
         // POST api/<CustomersController>
         [HttpPost]
         [EnableQuery()]
@@ -43,7 +40,7 @@ namespace OData.Dapper.Api.Controllers
         public async Task Put(int id, [FromBody] Supplier supplier)
         {
             supplier.SupplierID = id;
-          Ok(await repository.UpdateSupplier(supplier));
+            Ok(await repository.UpdateSupplier(supplier));
         }
 
         // DELETE api/<SuppliersController>/5
@@ -52,3 +49,12 @@ namespace OData.Dapper.Api.Controllers
         public async Task<IActionResult> Delete(int id) => Ok(await repository.Delete(id));
     }
 }
+
+
+//GET api/<SuppliersController>/5
+//[HttpGet]
+//[Route("{id}")]
+//[ODataRoute("({id})")]
+//[EnableQuery()]
+//public async Task<IActionResult> GetSuppierById([FromODataUri] int key) =>
+//    Ok(await repository.GetSupplierById(key));
